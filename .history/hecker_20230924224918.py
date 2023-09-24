@@ -51,11 +51,11 @@ for epoch in range(num_epochs):
     cost = binarycross(output_layer_output, y)
     costs.append(cost)
     
-    # Backpropagation : Finding the derivates with respect to the parameters
+    # Backpropagation : using the
     d_output = (output_layer_output - y) / len(y)
     d_hidden = d_output.dot(weights_hidden_output.T) * sigmoid_derivative(hidden_layer_output)
     
-    # Updating weights & biases 
+    # Updating weights & biases
     weights_hidden_output -= hidden_layer_output.T.dot(d_output) * learning_rate
     bias_output -= np.sum(d_output, axis=0, keepdims=True) * learning_rate
     weights_input_hidden -= X.T.dot(d_hidden) * learning_rate

@@ -40,22 +40,21 @@ def binarycross(output_layer_output, y):
 costs = []
 
 for epoch in range(num_epochs):
-    # Forward propagation : On each layer we are doing aggreggation and activation and feeding forward to the
-    # next layer
+    # Forward propagation
     hidden_layer_input = np.dot(X, weights_input_hidden) + bias_hidden
     hidden_layer_output = sigmoid(hidden_layer_input)
     output_layer_input = np.dot(hidden_layer_output, weights_hidden_output) + bias_output
     output_layer_output = sigmoid(output_layer_input)
     
-    # Computing cost using the binary cross entropy cost function
+    # Computing cost
     cost = binarycross(output_layer_output, y)
     costs.append(cost)
     
-    # Backpropagation : Finding the derivates with respect to the parameters
+    # Backpropagation
     d_output = (output_layer_output - y) / len(y)
     d_hidden = d_output.dot(weights_hidden_output.T) * sigmoid_derivative(hidden_layer_output)
     
-    # Updating weights & biases 
+    # Updating weights & biases using propagation results
     weights_hidden_output -= hidden_layer_output.T.dot(d_output) * learning_rate
     bias_output -= np.sum(d_output, axis=0, keepdims=True) * learning_rate
     weights_input_hidden -= X.T.dot(d_hidden) * learning_rate
@@ -64,7 +63,7 @@ for epoch in range(num_epochs):
     if epoch % 100 == 0:
         print(f'Epoch {epoch}, Cost: {cost}')
 
-# Plotting cost vs. iterations
+# Plot the cost vs. the number of iterations
 plt.plot(costs)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
